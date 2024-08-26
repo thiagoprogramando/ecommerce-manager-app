@@ -8,8 +8,7 @@
         <meta content="" name="description">
         <meta content="" name="keywords">
 
-        <link href="{{ asset('dashboard/img/favicon.png') }}" rel="icon">
-        <link href="{{ asset('dashboard/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+        <link href="{{ asset('dashboard/img/logo.png') }}" rel="icon">
 
         <link href="https://fonts.gstatic.com" rel="preconnect">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -67,17 +66,17 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <button class="btn btn-primary w-100" type="submit">Acessar</button>
+                                                <button class="btn btn-dark w-100" type="submit">Acessar</button>
                                             </div>
                                             <div class="col-12">
-                                                <p class="small mb-0">Esqueceu algo? <a href="">Recuperar conta</a></p>
+                                                <p class="small mb-0">Esqueceu algo? <a href="" class="text-danger">Recuperar conta</a></p>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
 
                                 <div class="credits">
-                                    Desenvolvido por <a href="https://ifuture.cloud/">IFUTURE CLOUD</a>
+                                    Desenvolvido por <a href="https://ifuture.cloud/" class="text-danger">IFUTURE CLOUD</a>
                                 </div>
                             </div>
                         </div>
