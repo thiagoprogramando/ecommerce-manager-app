@@ -14,7 +14,7 @@ class LoginController extends Controller {
             return redirect()->route('adm.app');
         }
 
-        return view('app.access.login');
+        return view('app.Access.login');
     }
     
     public function logon(Request $request) {
