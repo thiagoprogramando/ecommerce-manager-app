@@ -29,7 +29,7 @@
                     <div class="col-sm-12 col-md-3 col-lg-3 mt-2">
                         <div class="form-floating mb-3">
                             <input type="number" name="percentage" class="form-control" id="floatingPercentage" placeholder="Porcentagem:" required>
-                            <label for="floatingPercentage">Porcentagem:</label>
+                            <label for="floatingPercentage">Valor:</label>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3 col-lg-3 mt-2">
@@ -48,7 +48,7 @@
                     <div class="col-sm-12 col-md-3 offset-md-9 offset-lg-9 col-lg-3">
                         <div class="btn-group w-100" role="group" aria-label="Basic outlined example">
                             <a href="{{ route('adm.create-coupon') }}" class="btn btn-outline-danger">Limpar</a>
-                            <button type="submit" class="btn btn-outline-success">Cadastrar</button>
+                            <button type="submit" class="btn btn-dark">Cadastrar</button>
                         </div>
                     </div>
                 </div>

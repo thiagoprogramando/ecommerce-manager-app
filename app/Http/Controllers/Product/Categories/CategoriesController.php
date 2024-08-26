@@ -19,7 +19,7 @@ class CategoriesController extends Controller {
         $category = Category::find($id);
         if($category) {
 
-            if($category->license <> Auth::user()->license) {
+            if($category->license <> Auth::user()->api_key) {
                 return redirect()->back()->with('error', 'Sem permissão para visualizar Categoria!');
             }
 
@@ -70,7 +70,9 @@ class CategoriesController extends Controller {
             }
 
             if ($request->hasFile('file')) {
-                unlink(public_path('storage/categories/images/' . $category->photo));
+                if ($category->photo && file_exists(public_path('storage/categories/images/' . $category->photo))) {
+                    unlink(public_path('storage/categories/images/' . $category->photo));
+                }
 
                 $imageName = time() . '_' . uniqid() . '.' . $request->file->getClientOriginalExtension();
                 $request->file->storeAs('public/categories/images', $imageName);

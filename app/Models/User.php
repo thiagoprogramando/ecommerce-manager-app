@@ -12,6 +12,7 @@ class User extends Authenticatable {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
+        'photo',
         'name',
         'description',
         'address',
@@ -21,6 +22,7 @@ class User extends Authenticatable {
         'password',
         'wallet',
         'api_key',
+        'url',
         'type',
         'status',
         'created_at'
@@ -43,5 +45,16 @@ class User extends Authenticatable {
         ];
 
         return $statuses[$this->status] ?? 'Pendente';
+    }
+
+    public function labelType(): string {
+        $types = [
+            1 => 'Administrador',
+            2 => 'Empresa',
+            3 => 'Colaborador',
+            4 => 'Cliente'
+        ];
+
+        return $types[$this->type] ?? 'Desconhecido';
     }
 }

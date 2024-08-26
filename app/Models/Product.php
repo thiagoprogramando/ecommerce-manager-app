@@ -15,13 +15,17 @@ class Product extends Model {
         'name',
         'description',
         'value',
-        'qtd',
+        'stock',
         'ean',
         'color',
         'group',
         'size',
+        'condition',
+        'unit',
+        'mark',
         'type',
         'status',
+        'views',
         'license'
     ];
 
@@ -45,6 +49,5 @@ class Product extends Model {
 
         return $statuses[$this->status] ?? 'Pendente';
     }
-
 
 }

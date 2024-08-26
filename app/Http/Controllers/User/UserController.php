@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller {
     
@@ -53,6 +54,16 @@ class UserController extends Controller {
 
             if(!empty($request->wallet)) {
                 $data['wallet'] = $request->wallet;
+            }
+
+            if(!empty($request->photo)) {
+
+                if ($user->photo) {
+                    Storage::delete('public/' . $user->photo);
+                }
+    
+                $path = $request->file('photo')->store('profile-photos', 'public');
+                $data['photo'] = $path;
             }
 
             if($user->update($data)){
@@ -104,7 +115,7 @@ class UserController extends Controller {
         $user->api_key      = $request->api_key;
         $user->password     = bcrypt('123456');
         if($user->save()) {
-            return redirect()->back()->with('error', 'Usuário cadastrado com sucesso!');
+            return redirect()->back()->with('success', 'Usuário cadastrado com sucesso!');
         }
 
         return redirect()->back()->with('error', 'Não foi possível criar o Usuário!');

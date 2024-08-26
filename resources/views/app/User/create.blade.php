@@ -16,7 +16,7 @@
     <div class="card p-5">
         <div class="card-body">
             <h5 class="card-title">Informações do Usuário</h5>
-            <form action="{{ route('adm.create-user') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('adm.created-user') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="license" value="{{ Auth::user()->api_key }}">
                 <div class="row">
@@ -70,6 +70,7 @@
                                 <option disabled>Tipos</option>
                                 <option value="1">Administrador</option>
                                 <option value="2">Colaborador</option>
+                                <option value="4">Cliente</option>
                             </select>
                             <label for="floatingSelect">Tipo</label>
                         </div>
@@ -84,7 +85,7 @@
                     <div class="col-sm-12 col-md-3 offset-md-9 offset-lg-9 col-lg-3">
                         <div class="btn-group w-100" role="group" aria-label="Basic outlined example">
                             <a href="{{ route('adm.create-user') }}" class="btn btn-outline-danger">Limpar</a>
-                            <button type="submit" class="btn btn-outline-success">Atualizar</button>
+                            <button type="submit" class="btn btn-dark">Cadastrar</button>
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,8 @@ use App\Http\Controllers\Product\CategoryController;
 use App\Http\Controllers\Product\ImageController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Sale\CouponController;
+use App\Http\Controllers\Sale\OrderController;
+use App\Http\Controllers\Sale\PdvController;
 use App\Http\Controllers\User\UserController;
 
 use Illuminate\Support\Facades\Route;
@@ -30,6 +32,17 @@ Route::prefix('adm')->group(function () {
 
     //App
     Route::get('/app', [AppController::class, 'app'])->name('adm.app');
+    Route::get('/search', [AppController::class, 'search'])->name('adm.search');
+
+    //Order
+    Route::get('/list-orders', [OrderController::class, 'listOrders'])->name('adm.list-orders');
+    Route::post('/create-order', [OrderController::class, 'createOrder'])->name('adm.create-order');
+    Route::post('/remove-order', [OrderController::class, 'deleteOrder'])->name('adm.remove-order');
+
+    //PDV
+    Route::get('/pdv', [PdvController::class, 'pdv'])->name('adm.pdv');
+    Route::post('/add-pdv', [PdvController::class, 'addPdv'])->name('adm.add-pdv');
+    Route::post('/remove-pdv', [PdvController::class, 'removePdv'])->name('adm.remove-pdv');
 
     //Coupons
     Route::get('/list-coupons', [CouponController::class, 'listCoupons'])->name('adm.list-coupons');
@@ -42,7 +55,6 @@ Route::prefix('adm')->group(function () {
     //Product
     Route::get('/list-product', [ProductController::class, 'listProduct'])->name('adm.list-product');
     Route::get('/view-product/{id}', [ProductController::class, 'viewProduct'])->name('adm.view-product');
-    Route::get('/create-product', [ProductController::class, 'createProduct'])->name('adm.create-product');
     Route::post('/created-product', [ProductController::class, 'createdProduct'])->name('adm.created-product');
     Route::post('/updated-product', [ProductController::class, 'updatedProduct'])->name('adm.updated-product');
     Route::post('/deleted-product', [ProductController::class, 'deletedProduct'])->name('adm.deleted-product');

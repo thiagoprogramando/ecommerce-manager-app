@@ -22,7 +22,7 @@ class CouponController extends Controller {
         $coupon = Coupon::find($id);
         if($coupon) {
 
-            if($coupon->license <> Auth::user()->license) {
+            if($coupon->license <> Auth::user()->api_key) {
                 return redirect()->back()->with('error', 'Sem permissão para visualizar Cupom!');
             }
 

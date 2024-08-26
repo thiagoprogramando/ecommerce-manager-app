@@ -43,7 +43,7 @@ class PaymentController extends Controller {
                 return $item['type'] === 'BILL_PAYMENT';
             });
             
-            return view('app.Finance.transfers', [
+            return view('app.Finance.payments', [
                 'transfers' => $transfers
             ]);
         } else {

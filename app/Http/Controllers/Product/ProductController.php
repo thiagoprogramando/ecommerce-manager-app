@@ -24,7 +24,7 @@ class ProductController extends Controller {
         $product = Product::find($id);
         if($product) {
 
-            if($product->license <> Auth::user()->license) {
+            if($product->license <> Auth::user()->api_key) {
                 return redirect()->back()->with('error', 'Sem permissão para visualizar Produto!');
             }
 
@@ -39,27 +39,40 @@ class ProductController extends Controller {
         
         return redirect()->back()->with('error', 'Não foram encontrados dados do Produto!');
     }
-    
-    public function createProduct() {
-
-        return view('app.Product.create');
-    }
 
     public function createdProduct(Request $request) {
+
+        if ($request->hasFile('file')) {
+
+            $maxSize = 10 * 1024 * 1024;
+            foreach ($request->file('file') as $file) {
+                if ($file->getSize() > $maxSize) {
+                    return back()->with('error', 'Uma ou mais imagens excederam o tamanho máximo permitido de 10MB.');
+                }
+            }
+        }
         
         $product                = new Product();
         $product->name          = $request->name;
         $product->description   = $request->description;
         $product->value         = $request->value;
-        $product->qtd           = $request->qtd;
+        $product->stock         = $request->stock;
         $product->ean           = $request->ean;
-        $product->color         = $request->color;
-        $product->size          = $request->size;
-        $product->type          = $request->type;
-        $product->status        = $request->status;
         $product->license       = $request->license;
         if($product->save()) {
-            return redirect()->back()->with('success', 'Produto criado com sucesso!');
+
+            foreach ($request->file('file') as $file) {
+               
+                $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                if($file->storeAs('public/products/images', $imageName)) {
+                    Image::create([
+                        'file' => $imageName,
+                        'product_id' => $product->id
+                    ]);
+                }
+            }
+
+            return redirect()->route('adm.view-product', ['id' => $product->id])->with('success', 'Produto cadastrado com sucesso!');
         }
 
         return redirect()->back()->with('error', 'Não foi possível cadastrar o Produto, tente novamente mais tarde');
@@ -82,8 +95,8 @@ class ProductController extends Controller {
                 $data['value'] = $request->value;
             }
 
-            if(!empty($request->qtd)) {
-                $data['qtd'] = $request->qtd;
+            if(!empty($request->stock)) {
+                $data['stock'] = $request->stock;
             }
 
             if(!empty($request->ean)) {
@@ -96,6 +109,14 @@ class ProductController extends Controller {
 
             if(!empty($request->size)) {
                 $data['size'] = $request->size;
+            }
+
+            if(!empty($request->unit)) {
+                $data['unit'] = $request->unit;
+            }
+
+            if(!empty($request->mark)) {
+                $data['mark'] = $request->mark;
             }
 
             if(!empty($request->type)) {
@@ -134,10 +155,12 @@ class ProductController extends Controller {
             $newProduct->name = $product->name;
             $newProduct->description   = $product->description;
             $newProduct->value         = $product->value;
-            $newProduct->qtd           = $product->qtd;
+            $newProduct->stock         = $product->stock;
             $newProduct->ean           = $product->ean;
             $newProduct->color         = $product->color;
             $newProduct->size          = $product->size;
+            $newProduct->mark          = $product->mark;
+            $newProduct->unit          = $product->unit;
             $newProduct->type          = $product->type;
             $newProduct->status        = $product->status;
             $newProduct->license       = $product->license;

@@ -71,8 +71,8 @@
             <div class="card p-5">
 
                 <div class="btn-group mb-3 w-25" role="group">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transferModal">Nova Transferência</button>
-                    <button type="button" id="gerarExcel" class="btn btn-outline-primary">Excel</button>
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#transferModal">Nova Transferência</button>
+                    <button type="button" id="gerarExcel" class="btn btn-outline-dark">Excel</button>
                 </div>
 
                 <div class="modal fade" id="transferModal" tabindex="-1">

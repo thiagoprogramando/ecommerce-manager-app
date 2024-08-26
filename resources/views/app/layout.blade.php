@@ -8,7 +8,7 @@
         <meta content="" name="description">
         <meta content="" name="keywords">
 
-        <link href="{{ asset('dashboard/img/favicon.png') }}" rel="icon">
+        <link href="{{ asset('dashboard/img/logo.png') }}" rel="icon">
 
         <link href="https://fonts.gstatic.com" rel="preconnect">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -32,14 +32,14 @@
         <header id="header" class="header fixed-top d-flex align-items-center">
             <div class="d-flex align-items-center justify-content-between">
                 <a href="{{ route('adm.app') }}" class="logo d-flex align-items-center">
-                    <img src="{{ asset('dashboard/img/favicon.png') }}">
+                    <img src="{{ asset('dashboard/img/logo.png') }}">
                     <span class="d-none d-lg-block">{{ env('APP_NAME') }}</span>
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div>
 
             <div class="search-bar">
-                <form class="search-form d-flex align-items-center" method="GET" action="">
+                <form class="search-form d-flex align-items-center" method="GET" action="{{ route('adm.search') }}">
                     <input type="text" name="search" placeholder="Pesquisar" title="Pesquisar">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
@@ -53,16 +53,16 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        {{-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                             <i class="bi bi-bell"></i>
-                            <span class="badge bg-primary badge-number">4</span>
-                        </a>
+                            <span class="badge bg-danger badge-number">4</span>
+                        </a> --}}
 
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        {{-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                             <li class="dropdown-header"> Você possui 4 notificações </li>
                             <li><hr class="dropdown-divider"></li>
 
-                            {{-- @foreach ($notifications as $notification)
+                            @foreach ($notifications as $notification)
                                 <a href="{{ route('view-notification', ['id' => $notification->id]) }}">
                                     <li class="notification-item">
                                         @if($notification->type == 1)
@@ -79,13 +79,18 @@
                                     </li>
                                 </a>
                                 <li> <hr class="dropdown-divider"> </li>
-                            @endforeach --}}
+                            @endforeach
                             <li class="dropdown-footer"> <a href="#">Não há mais nada aqui.</a> </li>
-                        </ul>
+                        </ul> --}}
                     </li>
 
                     <li class="nav-item dropdown pe-3">
                         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            @if(Auth::user()->photo)
+                                <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Perfil" class="rounded-circle">
+                            @else
+                                <img src="{{ asset('dashboard/img/assets/profile.png') }}" alt="Perfil" class="rounded-circle">
+                            @endif
                             <span class="dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
                         </a>
 
@@ -121,9 +126,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('adm.app') }}"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link collapsed" href=""> <i class="bi bi-book"></i> <span>Material de apoio</span> </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-heading">Financeiro</li>
 
@@ -150,10 +155,7 @@
                     </a>
                     <ul id="forms-sale" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href=""> <i class="bi bi-circle"></i><span>Vendas</span> </a>
-                        </li>
-                        <li>
-                            <a href=""> <i class="bi bi-circle"></i><span>Inadimplência</span> </a>
+                            <a href="{{ route('adm.list-orders') }}"> <i class="bi bi-circle"></i><span>Vendas</span> </a>
                         </li>
                         <li>
                             <a href="{{ route('adm.list-coupons') }}"> <i class="bi bi-circle"></i><span>Cupons</span> </a>
@@ -183,6 +185,7 @@
                         <ul id="forms-users" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                             <li> <a href="{{ route('adm.list-users', ['type' => 1]) }}"><i class="bi bi-circle"></i><span>Administradores</span></a> </li>
                             <li> <a href="{{ route('adm.list-users', ['type' => 3]) }}"><i class="bi bi-circle"></i><span>Colaboradores</span></a> </li>
+                            <li> <a href="{{ route('adm.list-users', ['type' => 4]) }}"><i class="bi bi-circle"></i><span>Clientes</span></a> </li>
                         </ul>
                     </li>
                 @endif
