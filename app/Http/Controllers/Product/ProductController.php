@@ -64,7 +64,7 @@ class ProductController extends Controller {
             foreach ($request->file('file') as $file) {
                
                 $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                if($file->storeAs('public/products/images', $imageName)) {
+                if($file->storeAs('products/images', $imageName)) {
                     Image::create([
                         'file' => $imageName,
                         'product_id' => $product->id
