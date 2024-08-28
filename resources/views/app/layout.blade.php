@@ -126,28 +126,30 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('adm.app') }}"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a>
                 </li>
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link collapsed" href=""> <i class="bi bi-book"></i> <span>Material de apoio</span> </a>
-                </li> --}}
-
-                <li class="nav-heading">Financeiro</li>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ route('adm.wallet') }}"> <i class="bi bi-wallet2"></i> <span>Carteira</span> </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#forms-finan" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-bank"></i><span>Operações</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="forms-finan" class="nav-content collapse " data-bs-parent="#sidebar-nav">  
-                        <li><a href="{{ route('adm.transfers') }}"> <i class="bi bi-circle"></i><span>Transferências</span> </a></li>
-                        <li><a href="{{ route('adm.receivables') }}"> <i class="bi bi-circle"></i><span>Recebíveis</span> </a></li>
-                        <li><a href="{{ route('adm.payments') }}"> <i class="bi bi-circle"></i><span>Pagamentos</span> </a></li>
-                    </ul>
-                </li>
+                @if(Auth::user()->wallet)
+                    <li class="nav-heading">Financeiro</li>
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('adm.wallet') }}"> <i class="bi bi-wallet2"></i> <span>Carteira</span> </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" data-bs-target="#forms-finan" data-bs-toggle="collapse" href="#">
+                            <i class="bi bi-bank"></i><span>Operações</span><i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="forms-finan" class="nav-content collapse " data-bs-parent="#sidebar-nav">  
+                            <li><a href="{{ route('adm.transfers') }}"> <i class="bi bi-circle"></i><span>Transferências</span> </a></li>
+                            <li><a href="{{ route('adm.receivables') }}"> <i class="bi bi-circle"></i><span>Recebíveis</span> </a></li>
+                            <li><a href="{{ route('adm.payments') }}"> <i class="bi bi-circle"></i><span>Pagamentos</span> </a></li>
+                        </ul>
+                    </li>
+                @endif
                 
-                <li class="nav-heading">Gestão</li>
+                <li class="nav-heading">Gestão de Pedidos</li>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#forms-sale" data-bs-toggle="collapse" href="#">
@@ -164,6 +166,22 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#forms-marketing" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-camera2"></i><span>Marketing</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="forms-marketing" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="{{ route('adm.list-banners') }}"> <i class="bi bi-circle"></i><span>Banners</span> </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('adm.list-links') }}"> <i class="bi bi-circle"></i><span>Links</span> </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-heading">Gestão de Estoque</li>
+                
+                <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#forms-product" data-bs-toggle="collapse" href="#">
                         <i class="bi bi-box"></i><span>Produtos</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
@@ -178,6 +196,8 @@
                 </li>
 
                 @if (Auth::user()->type == 1)
+                    <li class="nav-heading">Gestão de Pessoas</li>
+
                     <li class="nav-item">
                         <a class="nav-link collapsed" data-bs-target="#forms-users" data-bs-toggle="collapse" href="#">
                             <i class="bi bi-file-earmark-person"></i><span>Usuários</span><i class="bi bi-chevron-down ms-auto"></i>

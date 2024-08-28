@@ -100,17 +100,20 @@
                         @endif
                     </div>
                 </div>
-            </div>
-        @else 
-            <div class="col-12 mt-3">
-                <div class="alert alert-dark bg-dark text-light border-0 alert-dismissible fade show" role="alert">
-                    Bem-vindo(a)! É hora de <a href="{{ route('adm.list-product') }}" class="text-danger">Criar seus primeiros Produtos</a>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
+            </div>    
         @endif
 
         <div class="col-12 col-sm-12 col-md-5 col-lg-5 row">
+
+            @if($products->count() < 1)
+                <div class="col-12 mb-3">
+                    <div class="alert alert-dark bg-dark text-light border-0 alert-dismissible fade show" role="alert">
+                        Bem-vindo(a)! É hora de <a href="{{ route('adm.list-product') }}" class="text-danger">Criar seus primeiros Produtos</a>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            @endif
+
             <div class="col-12 mb-3">
                 <div class="card bg-dark mb-3">
                     <div class="card-body">
