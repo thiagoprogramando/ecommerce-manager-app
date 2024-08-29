@@ -18,7 +18,7 @@
             <h5 class="card-title">Mantenha seus dados atualizados.</h5>
 
             <div class="row">
-                <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-3 text-center">
                     <div class="profile-photo">
                         @if(Auth::user()->photo)
                             <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Perfil" class="img-thumbnail w-50">
