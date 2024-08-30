@@ -14,6 +14,9 @@ class Link extends Model {
     protected $fillable = [
         'url_whatsapp',
         'url_instagram',
+        'url_facebook',
+        'url_linkedin',
+        'url_github',
         'url_maps',
         'license'
     ];

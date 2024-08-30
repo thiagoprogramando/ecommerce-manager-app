@@ -10,7 +10,10 @@ return new class extends Migration {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
             $table->string('url_whatsapp')->nullable();
+            $table->string('url_facebook')->nullable();
             $table->string('url_instagram')->nullable();
+            $table->string('url_linkedin')->nullable();
+            $table->string('url_github')->nullable();
             $table->string('url_maps')->nullable();
             $table->longText('license');
             $table->timestamps();

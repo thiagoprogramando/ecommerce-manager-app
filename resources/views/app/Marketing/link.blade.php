@@ -32,14 +32,26 @@
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 mb-2">
                             <div class="form-floating">
+                                <input type="text" name="url_facebook" value="{{ $link->url_facebook ?? '' }}" class="form-control" id="floatingLinkFacebook" placeholder="Link Facebook:">
+                                <label for="floatingLinkFacebook">Link Facebook:</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12 mb-2">
+                            <div class="form-floating">
                                 <input type="text" name="url_instagram" value="{{ $link->url_instagram ?? '' }}" class="form-control" id="floatingLinkInstagram" placeholder="Link Instagram:">
                                 <label for="floatingLinkInstagram">Link Instagram:</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 mb-2">
                             <div class="form-floating">
-                                <input type="text" name="url_maps" value="{{ $link->url_maps ?? '' }}" class="form-control" id="floatingLinkMaps" placeholder="Link Maps:">
-                                <label for="floatingLinkMaps">Link Maps:</label>
+                                <input type="text" name="url_linkedin" value="{{ $link->url_linkedin ?? '' }}" class="form-control" id="floatingLinkLinkedin" placeholder="Link floatingLinkLinkedin:">
+                                <label for="floatingLinkLinkedin">Link Maps:</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12 mb-2">
+                            <div class="form-floating">
+                                <input type="text" name="url_github" value="{{ $link->url_github ?? '' }}" class="form-control" id="floatingLinkGitHub" placeholder="Link GitHub:">
+                                <label for="floatingLinkGitHub">Link GitHub:</label>
                             </div>
                         </div>
 
