@@ -25,6 +25,18 @@ class Order extends Model {
         'license'
     ];
 
+    public function user() {
+        return $this->belongsTo(User::class, 'customer_id');
+    }
+
+    public function discounts() {
+        return $this->hasMany(Discount::class, 'payment_token', 'payment_token');
+    }
+
+    public function carts() {
+        return $this->hasMany(Cart::class, 'payment_token', 'payment_token');
+    }
+
     public function labelStatus(): string {
         $status = [
             0 => 'Pendente',
@@ -37,11 +49,29 @@ class Order extends Model {
         return $status[$this->status] ?? 'Pendente';
     }
 
-    public function discounts() {
-        return $this->hasMany(Discount::class, 'token_pay', 'payment_token');
+    public function labelMethod(): string {
+
+        switch($this->payment_method) {
+            case 'CREDIT_CARD':
+                return 'Cartão de Crédito';
+                break;
+            case 'PIX':
+                return 'Pix';
+                break;
+            case 'BOLETO':
+                return 'Boleto';
+                break;
+            default:
+                return '---';
+                break;
+        }
     }
 
-    public function carts() {
-        return $this->hasMany(Cart::class, 'token_pay', 'payment_token');
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($order) {
+            $order->carts()->delete();
+        });
     }
 }

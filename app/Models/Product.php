@@ -29,6 +29,14 @@ class Product extends Model {
         'license'
     ];
 
+    public function images() {
+        return $this->hasMany(Image::class, 'product_id');
+    }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
+    }
+
     public function labelType(): string {
         $types = [
             0 => 'Físico',

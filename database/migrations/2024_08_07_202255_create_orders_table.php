@@ -10,9 +10,10 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->decimal('value', 10, 2);
-            $table->integer('status')->default(0); // 0 is pendent 1 is confirmed 2 is payment approved 3 send 4 cancel
+            $table->integer('status')->default(0); // 0 is pendent 1 is confirmed 2 is approved 3 send 4 cancel
             $table->string('payment_method');
             $table->integer('payment_installments');
             $table->string('payment_token');

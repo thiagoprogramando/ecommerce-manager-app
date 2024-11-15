@@ -30,6 +30,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Prévia </th>
                             <th scope="col">Detalhes</th>
+                            <th scope="col">Produtos Associados</th>
                             <th scope="col" class="text-center">Opções</th>
                         </tr>
                     </thead>
@@ -44,6 +45,11 @@
                                 </td>
                                 <td>{{ $category->name }} <br>
                                     <span class="badge rounded-pill bg-dark">{{ \Illuminate\Support\Str::limit($category->description, 40) }}</span>
+                                </td>
+                                <td>
+                                    @foreach ($category->products as $product)
+                                        <span class="badge rounded-pill bg-dark">{{ $product->name }}</span>
+                                    @endforeach
                                 </td>
                                 <td class="text-center">
                                     <form action="{{ route('adm.deleted-category') }}" method="POST" class="delete">

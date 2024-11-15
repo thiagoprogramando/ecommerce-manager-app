@@ -25,6 +25,7 @@ class OrderController extends Controller {
         $token = rand(0, 999) . strtoupper(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))[0] . rand(0, 99) . strtoupper(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))[0] . rand(999, 999999999999);
 
         $order                          = new Order();
+        $order->customer_id             = $request->customer_id;
         $order->name                    = $request->name;
         $order->value                   = $request->value;
         $order->status                  = 1;
@@ -35,8 +36,8 @@ class OrderController extends Controller {
         if($order->save()) {
 
             Cart::where('customer_id', $request->customer_id)
-                ->whereNull('token_pay')
-                ->update(['token_pay' => $token, 'status' => 1]);
+                ->whereNull('payment_token')
+                ->update(['payment_token' => $token, 'status' => 1]);
 
                 return redirect()->route('adm.list-orders')->with('success', 'Pedido concluído com sucesso!');
         }
@@ -44,56 +45,33 @@ class OrderController extends Controller {
         return redirect()->back()->with('error', 'Não foi possível finalizar o carrinho!');
     }
 
+    public function updateOrder(Request $request) {
+
+        $order = Order::find($request->order_id);
+        if ($order) {
+
+            $order->tracking_code           = $request->tracking_code ?? null;
+            $order->payment_method          = $request->payment_method;
+            $order->payment_installments    = $request->payment_installments;
+            $order->status                  = $request->status;
+
+            if ($order->save()) {
+                return redirect()->back()->with('success', 'Dados alterados com sucesso!');
+            }
+
+            return redirect()->back()->with('error', 'Não foi possível alterar os dados!');
+        }
+
+        return redirect()->back()->with('error', 'Não foi possível alterar os dados!');
+    }
+
     public function deleteOrder(Request $request) {
 
         $order = Order::find($request->id);
-        if($order) {
-
-            if(empty($order->payment_token) && $order->delete()) {
-                return redirect()->back()->with('success', 'Pedido cancelado com sucesso!');
-            }
- 
-            if(!empty($order->payment_token) && $order->status != 1 && $order->status != 2) {
-
-                $cancel = $this->cancelInvoice($order->payment_token);
-                if(($cancel == 1 || $cancel == true) && $order->delete()) {
-                    return redirect()->back()->with('success', 'Pedido cancelado com sucesso!');
-                } else {
-                    return redirect()->back()->with('error', 'Não foi possível cancelar o Pedido!');
-                }
-            }
-
-            return redirect()->back()->with('error', 'Não foi possível cancelar o Pedido!');
+        if($order && $order->delete()) {
+            return redirect()->back()->with('success', 'Pedido cancelado com sucesso!');
         }
 
         return redirect()->back()->with('error', 'Nenhum pedido encontrado!');
-    }
-
-    private function cancelInvoice($token) {
-
-        $client = new Client();
-        $options = [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'access_token' => Auth::user()->api_key,
-                'User-Agent'   => env('APP_NAME')
-            ],
-            'verify' => false
-        ];
-
-        $response = $client->delete(env('API_URL_ASSAS') . 'v3/payments/'.$token, $options);
-        $body = (string) $response->getBody();
-        
-        if ($response->getStatusCode() === 200) {
-            $data = json_decode($body, true);
-    
-            if(isset($data['deleted']) && $data['deleted'] == true) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
     }
 }

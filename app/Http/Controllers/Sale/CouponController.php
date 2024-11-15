@@ -48,7 +48,7 @@ class CouponController extends Controller {
         $coupon->qtd            = $request->qtd;
         $coupon->license        = Auth::user()->api_key;
         if($coupon->save()) {
-            return redirect()->route('adm.view-coupon', ['id' => $coupon->id])->with('success', 'Cupom cadastrado com sucesso!');
+            return redirect()->route('adm.list-coupons')->with('success', 'Cupom cadastrado com sucesso!');
         }
 
         return redirect()->back()->with('error', 'Não foi possível cadastrar o Cupom');

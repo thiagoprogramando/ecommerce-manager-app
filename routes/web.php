@@ -40,6 +40,7 @@ Route::prefix('adm')->group(function () {
         //Order
         Route::get('/list-orders', [OrderController::class, 'listOrders'])->name('adm.list-orders');
         Route::post('/create-order', [OrderController::class, 'createOrder'])->name('adm.create-order');
+        Route::post('/update-order', [OrderController::class, 'updateOrder'])->name('adm.update-order');
         Route::post('/remove-order', [OrderController::class, 'deleteOrder'])->name('adm.remove-order');
 
         //PDV

@@ -124,6 +124,10 @@ class UserController extends Controller {
     public function deletedUser(Request $request) {
 
         $user = User::find($request->id);
+        if($user->type == 1) {
+            return redirect()->back()->with('info', 'Não é possível excluir um usuário Administrador!');
+        }
+
         if($user && $user->delete()) {
 
             return redirect()->back()->with('success', 'Usuário excluído com sucesso!');

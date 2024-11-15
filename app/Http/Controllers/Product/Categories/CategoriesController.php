@@ -50,7 +50,7 @@ class CategoriesController extends Controller {
         }
 
         if($category->save()) {
-            return redirect()->route('adm.view-category', ['id' => $category->id])->with('success', 'Categoria cadastrada com sucesso!');
+            return redirect()->route('adm.list-categories')->with('success', 'Categoria cadastrada com sucesso!');
         }
 
         return redirect()->back()->with('error', 'Não foi possível cadastrar a Categoria!');

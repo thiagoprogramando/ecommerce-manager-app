@@ -17,4 +17,8 @@ class Category extends Model {
         'photo',
         'license'
     ];
+
+    public function products() {
+        return $this->belongsToMany(Product::class, 'category_product', 'category_id', 'product_id');
+    }
 }

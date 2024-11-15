@@ -40,7 +40,7 @@
                                 <td>{{ $coupon->name }} <br>
                                     <span class="badge rounded-pill bg-dark">{{ \Illuminate\Support\Str::limit($coupon->description, 40) }}</span>
                                 </td>
-                                <td>{{ $coupon->percentage }}%<br>
+                                <td>R$ {{ $coupon->percentage }}<br>
                                     <span class="badge bg-dark">Disponível: {{ $coupon->qtd }}</span>
                                 </td>
                                 <td class="text-center">

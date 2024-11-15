@@ -197,7 +197,7 @@
                                     </div>
 
                                     <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <div class="container d-flex align-items-center justify-content-center">
+                                        <div class="btn-group container d-flex align-items-center justify-content-center">
                                             <a href="{{ route('adm.list-product') }}" class="btn btn-outline-danger me-2">Cancelar</a>
                                             <button type="submit" class="btn btn-dark me-3">Atualizar</button>
                                         </div>
@@ -225,16 +225,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
+                                            <div class="modal-footer btn-group">
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                                                <button type="submit" class="btn btn-dark">Cadastrar</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                              </div>
         
-                             @if($images->count() > 0)
+                             @if($product->images->count() > 0)
                                 <table class="table table-sm table-responsive mt-5">
                                     <thead>
                                         <tr>
@@ -243,7 +243,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($images as $image)
+                                        @foreach ($product->images as $image)
                                             <tr>
                                                 <th scope="row"> <a href="{{ asset('storage/products/images/' . $image->file) }}" target="_blank">Visualizar</a></th>
                                                 <td class="text-center">
@@ -291,16 +291,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
+                                            <div class="modal-footer btn-group">
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                                                <button type="submit" class="btn btn-dark">Cadastrar</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                              </div>
         
-                             @if($categoriesProduct->count() > 0)
+                             @if($product->categories->count() > 0)
                                 <table class="table table-sm mt-5">
                                     <thead>
                                         <tr>
@@ -310,15 +310,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($categoriesProduct as $category)
+                                        @foreach ($product->categories as $category)
                                             <tr>
                                                 <td scope="row">
-                                                    @if(!empty($category->categoryLabel->photo)) 
-                                                        <img src="{{ asset('storage/categories/images/' . $category->categoryLabel->photo) }}" width="50"></td>
+                                                    @if(!empty($category->photo)) 
+                                                        <img src="{{ asset('storage/categories/images/' . $category->photo) }}" width="50"></td>
                                                     @endif
                                                 <th scope="row">
-                                                    {{ $category->categoryLabel->name }} <br> 
-                                                    <span class="badge rounded-pill bg-primary">{{ $category->categoryLabel->description }}</span>
+                                                    {{ $category->name }} <br> 
+                                                    <span class="badge rounded-pill bg-primary">{{ $category->description }}</span>
                                                 </th>
                                                 <td class="text-center">
                                                     <form action="{{ route('adm.deleted-product-category') }}" method="POST" class="delete">

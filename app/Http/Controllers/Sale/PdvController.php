@@ -16,7 +16,7 @@ class PdvController extends Controller {
 
         if($request->client) {
             $client = User::find($request->client);
-            $itens  = Cart::where('customer_id', $client->id)->whereNull('token_pay')->orderBy('id', 'desc')->get();
+            $itens  = Cart::where('customer_id', $client->id)->whereNull('payment_token')->orderBy('id', 'desc')->get();
         } else {
             $client = false;
             $itens  = [];
@@ -53,7 +53,6 @@ class PdvController extends Controller {
         }
 
         return redirect()->back()->with('error', 'Não foi possível adicionar o produto!');
-
     }
 
     public function removePdv(Request $request) {

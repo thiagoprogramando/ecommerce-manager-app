@@ -25,7 +25,7 @@
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header container">
-                    <h5 class="modal-title">Comece com as informações básicas</h5>
+                    <h5 class="modal-title">Informações básicas</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -48,13 +48,13 @@
                             <div class="col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-floating mb-3">
                                     <input name="file[]" class="form-control" id="floatingPhoto" type="file" accept="image/*" multiple>
-                                    <label for="floatingPhoto">Fotos:</label>
+                                    <label for="floatingPhoto">Anexe uma ou mais fotos:</label>
                                 </div>
                             </div>
 
                             <div class="col-sm-12 col-md-4 col-lg-4">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="value" class="form-control" id="floatingValue" placeholder="Preço:">
+                                    <input type="text" name="value" class="form-control" id="floatingValue" placeholder="Preço:" oninput="mascaraReal(this)">
                                     <label for="floatingValue">Preço:</label>
                                 </div>
                             </div>

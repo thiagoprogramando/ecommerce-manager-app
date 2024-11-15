@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Models\CategoryProduct;
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -28,12 +28,9 @@ class ProductController extends Controller {
                 return redirect()->back()->with('error', 'Sem permissão para visualizar Produto!');
             }
 
-            $images             = Image::where('product_id', $product->id)->get();
-            $categoriesProduct  = CategoryProduct::where('product_id', $product->id)->get();
             return view('app.Product.view', [
-                'product'               => $product,
-                'images'                => $images,
-                'categoriesProduct'     => $categoriesProduct
+                'product'    => $product,
+                'categories' => Category::where('license', Auth::user()->license)->get()
             ]);
         }
         
@@ -43,7 +40,6 @@ class ProductController extends Controller {
     public function createdProduct(Request $request) {
 
         if ($request->hasFile('file')) {
-
             $maxSize = 10 * 1024 * 1024;
             foreach ($request->file('file') as $file) {
                 if ($file->getSize() > $maxSize) {
@@ -55,20 +51,21 @@ class ProductController extends Controller {
         $product                = new Product();
         $product->name          = $request->name;
         $product->description   = $request->description;
-        $product->value         = $request->value;
+        $product->value         = $this->formatarValor($request->value);
         $product->stock         = $request->stock;
         $product->ean           = $request->ean;
         $product->license       = $request->license;
         if($product->save()) {
 
-            foreach ($request->file('file') as $file) {
-               
-                $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                if($file->storeAs('products/images', $imageName)) {
-                    Image::create([
-                        'file' => $imageName,
-                        'product_id' => $product->id
-                    ]);
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $file) {
+                    $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    if ($file->storeAs('products/images', $imageName, 'public')) {
+                        Image::create([
+                            'file'       => $imageName,
+                            'product_id' => $product->id
+                        ]);
+                    }
                 }
             }
 
@@ -83,50 +80,17 @@ class ProductController extends Controller {
         $product = Product::find($request->id);
         if($product) {
 
-            if(!empty($request->name)) {
-                $data['name'] = $request->name;
-            }
-
-            if(!empty($request->description)) {
-                $data['description'] = $request->description;
-            }
-
-            if(!empty($request->value)) {
-                $data['value'] = $request->value;
-            }
-
-            if(!empty($request->stock)) {
-                $data['stock'] = $request->stock;
-            }
-
-            if(!empty($request->ean)) {
-                $data['ean'] = $request->ean;
-            }
-
-            if(!empty($request->color)) {
-                $data['color'] = $request->color;
-            }
-
-            if(!empty($request->size)) {
-                $data['size'] = $request->size;
-            }
-
-            if(!empty($request->unit)) {
-                $data['unit'] = $request->unit;
-            }
-
-            if(!empty($request->mark)) {
-                $data['mark'] = $request->mark;
-            }
-
-            if(!empty($request->type)) {
-                $data['type'] = $request->type;
-            }
-
-            if(!empty($request->status)) {
-                $data['status'] = $request->status;
-            }
-
+            $data['name']           = $request->name ?? '---';
+            $data['description']    = $request->description ?? '';
+            $data['value']          = $request->value ?? 0;
+            $data['stock']          = $request->stock ?? null;
+            $data['ean']            = $request->ean ?? null;
+            $data['color']          = $request->color ?? null;
+            $data['size']           = $request->size ?? null;
+            $data['unit']           = $request->unit ?? null;
+            $data['mark']           = $request->mark ?? null;
+            $data['type']           = $request->type ?? 0;
+            $data['status']         = $request->status ?? 2;
             if($product->update($data)) {
                 return redirect()->back()->with('success', 'Produto atualizado com sucesso!');
             }
@@ -173,5 +137,13 @@ class ProductController extends Controller {
         }
 
         return redirect()->back()->with('error', 'Não foram encontrados dados do Produto!');
+    }
+
+    private function formatarValor($valor) {
+        
+        $valor = preg_replace('/[^0-9,.]/', '', $valor);
+        $valor = str_replace(['.', ','], '', $valor);
+
+        return number_format(floatval($valor) / 100, 2, '.', '');
     }
 }

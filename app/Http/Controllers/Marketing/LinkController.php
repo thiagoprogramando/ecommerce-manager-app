@@ -22,12 +22,12 @@ class LinkController extends Controller {
         $link = Link::where('license', Auth::user()->api_key)->first();
         if($link) {
 
-            $link->url_whatsapp     = $request->url_whatsapp;
-            $link->url_instagram    = $request->url_instagram;
-            $link->url_facebook     = $request->url_facebook;
-            $link->url_linkedin     = $request->url_linkedin;
-            $link->url_github       = $request->url_github;
-            $link->url_maps         = $request->url_maps;
+            $link->url_whatsapp     = $request->url_whatsapp ?? '';
+            $link->url_instagram    = $request->url_instagram ?? '';
+            $link->url_facebook     = $request->url_facebook ?? '';
+            $link->url_linkedin     = $request->url_linkedin ?? '';
+            $link->url_github       = $request->url_github ?? '';
+            $link->url_maps         = $request->url_maps ?? '';
             if($link->save()) {
                 return redirect()->back()->with('success', 'Links atualizados com sucesso!');
             }

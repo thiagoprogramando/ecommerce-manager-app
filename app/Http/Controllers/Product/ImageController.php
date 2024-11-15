@@ -11,8 +11,8 @@ class ImageController extends Controller {
     public function createdImage(Request $request) {
 
         if ($request->hasFile('file')) {
-
             $maxSize = 10 * 1024 * 1024;
+
             foreach ($request->file('file') as $file) {
                 if ($file->getSize() > $maxSize) {
                     return back()->with('error', 'Uma ou mais imagens excederam o tamanho máximo permitido de 10MB.');
@@ -20,11 +20,10 @@ class ImageController extends Controller {
             }
 
             foreach ($request->file('file') as $file) {
-               
                 $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                if($file->storeAs('products/images', $imageName)) {
+                if ($file->storeAs('products/images', $imageName, 'public')) {
                     Image::create([
-                        'file' => $imageName,
+                        'file'       => $imageName,
                         'product_id' => $request->id
                     ]);
                 }

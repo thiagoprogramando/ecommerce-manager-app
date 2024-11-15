@@ -32,7 +32,7 @@
                             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
                                 <div class="d-flex justify-content-center py-4">
                                     <a href="{{ route('adm.login') }}" class="logo d-flex align-items-center w-auto">
-                                        <img src="{{ asset('dashboard/img/logo.png') }}" alt="">
+                                        <img src="{{ asset('dashboard/img/logo.png') }}" alt="{{ env('APP_NAME') }}">
                                         <span class="d-none d-lg-block">{{ env('APP_NAME') }}</span>
                                     </a>
                                 </div>
@@ -60,17 +60,11 @@
                                                 <input type="password" name="password" class="form-control" placeholder="Senha:" required>
                                             </div>
                                             <div class="col-12">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                                                    <label class="form-check-label" for="rememberMe">Salvar dados</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
                                                 <button class="btn btn-dark w-100" type="submit">Acessar</button>
                                             </div>
-                                            <div class="col-12">
+                                            {{-- <div class="col-12">
                                                 <p class="small mb-0">Esqueceu algo? <a href="" class="text-danger">Recuperar conta</a></p>
-                                            </div>
+                                            </div> --}}
                                         </form>
                                     </div>
                                 </div>
